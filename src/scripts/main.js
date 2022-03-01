@@ -99,6 +99,9 @@ function verificaFimDeJogo() {
 	if (qtdCartasRestantes == 0) {
 		alert(`Você ganhou em ${tentativas} jogadas!`);
 
+		if (confirm("Você quer compartilhar sua vitória?") == true)
+			enviarMensagem();
+
 		if (confirm("Quer jogar novamente?") == true) prepararJogo();
 	}
 }
@@ -122,4 +125,13 @@ function prepararJogo() {
 	segundaCarta = null;
 
 	init();
+}
+
+function enviarMensagem() {
+	const telefone = "5569999349205";
+	const mensagem = `Gustavo, eu ganhei mais uma! :)`;
+
+	const url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
+
+	window.open(url, "_blank").focus();
 }
