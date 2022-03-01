@@ -12,8 +12,10 @@ main {
 }
 
 main > h1 {
+	width: 100%;
 	font-weight: bold;
 	font-size: 56px;
+	text-align: center;
 	line-height: 66px;
 	letter-spacing: -0.004em;
 
@@ -63,11 +65,3 @@ main > h1 {
 .costa {
 	transform: rotateY(180deg);
 }
-
-/* .carta:hover .costa {
-	transform: rotateY(0deg);
-}
-
-.cartar:hover .frente {
-	transform: rotateY(-180deg);
-} */

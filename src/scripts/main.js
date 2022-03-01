@@ -89,7 +89,7 @@ function virarCarta(e) {
 		e.classList.add("completa");
 		primeiraCarta.classList.add("completa");
 		primeiraCarta = null;
-		//setTimeout(verificaFimDeJogo, 500);
+
 		verificaFimDeJogo();
 	}
 }
@@ -98,6 +98,8 @@ function verificaFimDeJogo() {
 	qtdCartasRestantes--;
 	if (qtdCartasRestantes == 0) {
 		alert(`Você ganhou em ${tentativas} jogadas!`);
+
+		if (confirm("Quer jogar novamente?") == true) prepararJogo();
 	}
 }
 
@@ -107,4 +109,17 @@ function desvirarCartas() {
 
 	segundaCarta.querySelector(".divImagem").classList.toggle("costa");
 	segundaCarta = null;
+}
+
+function prepararJogo() {
+	document.querySelector(".lista-de-cartas").innerHTML = "";
+	cartasDaPartida = [];
+
+	qtdCartasRestantes = 0;
+	tentativas = 0;
+
+	primeiraCarta = null;
+	segundaCarta = null;
+
+	init();
 }
