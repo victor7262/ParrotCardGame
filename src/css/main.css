@@ -64,10 +64,10 @@ main > h1 {
 	transform: rotateY(180deg);
 }
 
-.carta:hover .costa {
+/* .carta:hover .costa {
 	transform: rotateY(0deg);
 }
 
 .cartar:hover .frente {
 	transform: rotateY(-180deg);
-}
+} */

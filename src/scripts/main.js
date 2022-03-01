@@ -12,7 +12,10 @@ let cartasDaPartida = [];
 
 let qtdCartas = 0;
 
-//init();
+let primeiraCarta = null;
+let segundaCarta = null;
+
+init();
 
 function init() {
 	do {
@@ -46,8 +49,8 @@ function montarArrCartasDaPartida(qtd) {
 		arr.push(cartasDoJogo[index]);
 		arr.push(cartasDoJogo[index]);
 	}
-
-	return arr.sort(comparador);
+	return arr;
+	//	return arr.sort(comparador);
 }
 
 function comparador() {
@@ -57,14 +60,41 @@ function comparador() {
 function adicionarCartaNaTela(nomeDaImagem) {
 	const lista = document.querySelector(".lista-de-cartas");
 
-	let NovaCartaHtml = `<div class="carta">
+	let NovaCartaHtml = `<div class="carta" onclick="virarCarta(this)">
 <div class="frente face">
 	<img src="./src/img/front.png" alt="" />
 </div>
-<div class="costa face">
-	<img src="./src/img/${nomeDaImagem}.gif" />
+<div class="divImagem costa face">
+	<img class="imagem" src="./src/img/${nomeDaImagem}.gif" />
 </div>
 </div>`;
 
 	lista.innerHTML += NovaCartaHtml;
+}
+
+function virarCarta(e) {
+	if (e.classList.contains("completa") || e == primeiraCarta) return;
+
+	e.querySelector(".divImagem").classList.toggle("costa");
+
+	if (primeiraCarta == null) {
+		primeiraCarta = e;
+	} else if (
+		primeiraCarta.querySelector(".imagem").src == e.querySelector(".imagem").src
+	) {
+		e.classList.add("completa");
+		primeiraCarta.classList.add("completa");
+		primeiraCarta = null;
+	} else {
+		segundaCarta = e;
+		setTimeout(desvirarCartas, 1000);
+	}
+}
+
+function desvirarCartas() {
+	primeiraCarta.querySelector(".divImagem").classList.toggle("costa");
+	primeiraCarta = null;
+
+	segundaCarta.querySelector(".divImagem").classList.toggle("costa");
+	segundaCarta = null;
 }
