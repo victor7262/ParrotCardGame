@@ -10,7 +10,8 @@ const cartasDoJogo = [
 
 let cartasDaPartida = [];
 
-let qtdCartas = 0;
+let qtdCartasRestantes = 0,
+	tentativas = 0;
 
 let primeiraCarta = null;
 let segundaCarta = null;
@@ -27,10 +28,10 @@ function init() {
 			Number(qtd) >= 4 &&
 			Number(qtd) <= 14
 		)
-			qtdCartas = Number(qtd);
-	} while (qtdCartas == 0);
+			qtdCartasRestantes = Number(qtd) / 2;
+	} while (qtdCartasRestantes == 0);
 
-	renderizarCartas(qtdCartas);
+	renderizarCartas(qtdCartasRestantes);
 }
 
 function renderizarCartas(qtd) {
@@ -43,14 +44,13 @@ function renderizarCartas(qtd) {
 
 function montarArrCartasDaPartida(qtd) {
 	let arr = [];
-	let qtdCartasDiferentes = qtd / 2;
 
-	for (let index = 0; index < qtdCartasDiferentes; index++) {
+	for (let index = 0; index < qtd; index++) {
 		arr.push(cartasDoJogo[index]);
 		arr.push(cartasDoJogo[index]);
 	}
-	return arr;
-	//	return arr.sort(comparador);
+
+	return arr.sort(comparador);
 }
 
 function comparador() {
@@ -76,18 +76,28 @@ function virarCarta(e) {
 	if (e.classList.contains("completa") || e == primeiraCarta) return;
 
 	e.querySelector(".divImagem").classList.toggle("costa");
+	tentativas++;
 
 	if (primeiraCarta == null) {
 		primeiraCarta = e;
 	} else if (
-		primeiraCarta.querySelector(".imagem").src == e.querySelector(".imagem").src
+		primeiraCarta.querySelector(".imagem").src != e.querySelector(".imagem").src
 	) {
+		segundaCarta = e;
+		setTimeout(desvirarCartas, 1000);
+	} else {
 		e.classList.add("completa");
 		primeiraCarta.classList.add("completa");
 		primeiraCarta = null;
-	} else {
-		segundaCarta = e;
-		setTimeout(desvirarCartas, 1000);
+		//setTimeout(verificaFimDeJogo, 500);
+		verificaFimDeJogo();
+	}
+}
+
+function verificaFimDeJogo() {
+	qtdCartasRestantes--;
+	if (qtdCartasRestantes == 0) {
+		alert(`Você ganhou em ${tentativas} jogadas!`);
 	}
 }
 
